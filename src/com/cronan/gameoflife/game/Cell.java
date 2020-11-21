@@ -1,4 +1,27 @@
-package PACKAGE_NAME;
+package com.cronan.gameoflife.game;
 
-public class Cell {
+class Cell {
+    private boolean isAlive; //tells weather a cell is alive or dead
+    private char aliveOrDeadSym;
+
+    public Cell(boolean isAlive) {
+        setAlive(isAlive);
+    }
+
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void setAlive(boolean alive) {
+        aliveOrDeadSym = alive ? 'O' : Character.MIN_VALUE;
+        isAlive = alive;
+    }
+
+    public char getAliveOrDeadSym() {
+        return aliveOrDeadSym;
+    }
+
+    public void setAliveOrDeadSym(char aliveOrDeadSym) {
+        this.aliveOrDeadSym = aliveOrDeadSym;
+    }
 }
