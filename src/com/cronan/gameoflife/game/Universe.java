@@ -1,6 +1,7 @@
 package com.cronan.gameoflife.game;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -50,6 +51,8 @@ public class Universe {
 
     }
 
+    //TODO: find a way to check all neighbors and weather they are alive or dead
+
     //getters and setters
     public static int getGeneration() {
         return generation;
@@ -92,5 +95,50 @@ public class Universe {
             cell = new Cell(false);
         }
         return cell;
+    }
+
+    //TODO: find all neighbors and check weather alive or dead
+    //Static inner class Direction to access all neighboring cells
+    static class Direction {
+        int x;
+        int y;
+
+        public Direction(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
+
+    //Creating all directions for neighboring cells N, S, E, W, SE, SW, NE, NW
+    Direction north = new Direction(-1, 0);
+    Direction south = new Direction(1, 0);
+    Direction east = new Direction(0, 1);
+    Direction west = new Direction(0, -1);
+    Direction southEast = new Direction(1, 1);
+    Direction southWest = new Direction(1, -1);
+    Direction northEast = new Direction(-1, 1);
+    Direction northWest = new Direction(-1, -1);
+
+    List<Direction> directions = Arrays.asList(north, south, east, west, southEast, southWest, northEast, northWest);
+
+    /**
+     * Method helps determine how many neighboring {@code Cell} of a specified {@code Cell} are alive
+     * @param r - represents the row coordinate value of the cell whose neighboring cells are to be checked
+     * @param c - represents the column coordinate value of cell whose neighboring cells are to be checked
+     * @return int - representing the total number of neighboring cells that are alive
+     */
+    public int aliveNeighborsCount(int r, int c) {
+        int alive = 0;
+
+        for (Direction direction : directions) {
+            int row = (direction.x + r + currentUniverse.length) % currentUniverse.length;
+            int col = (direction.y + c + currentUniverse.length) % currentUniverse.length;
+
+            if (currentUniverse[row][col] == 'O') {
+                alive++;
+            }
+        }
+
+        return alive;
     }
 }
