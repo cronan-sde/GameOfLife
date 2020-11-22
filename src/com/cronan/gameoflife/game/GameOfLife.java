@@ -34,12 +34,14 @@ public class GameOfLife extends JFrame {
         cellsAliveLabel.setName("cellsAlive");
         updateLabels();
 
+        //Buttons
+
         //add labels to top panel
         topPanel.add(generationLabel);
         topPanel.add(cellsAliveLabel);
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS)); //stacking labels vertically
 
-        getContentPane().add(BorderLayout.NORTH, topPanel); // adding topPanel to top of frame
+        getContentPane().add(BorderLayout.WEST, topPanel); // adding topPanel to top of frame
         setVisible(true);
 
         evolution();
@@ -79,9 +81,19 @@ public class GameOfLife extends JFrame {
 
     public void evolution() {
         displayCurrentUniverse();
-        while (Universe.getGeneration() < 20) {
+        while (true) {
             universe.nextGeneration();
+            slowDisplay();
             displayCurrentUniverse();
+        }
+    }
+
+    public void slowDisplay() {
+        try {
+            Thread.sleep(500);
+        }
+        catch (InterruptedException ignored) {
+
         }
     }
 }
