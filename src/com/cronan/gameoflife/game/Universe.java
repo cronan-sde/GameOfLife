@@ -55,6 +55,13 @@ public class Universe {
         displayCurrentUniverse();
     }
 
+    public void life() {
+        initializeUniverse();
+        while (generation < 20) {
+            nextGeneration();
+        }
+    }
+
     //TODO: display currentUniverse, delay, then display the new Universe
     public void displayCurrentUniverse() {
         System.out.println("Generation: " + getGeneration() + ", Alive: " + cellsAlive);
