@@ -10,7 +10,7 @@ public class GameOfLife extends JFrame {
     private JLabel generationLabel;
     private JLabel cellsAliveLabel;
     //Buttons
-    private JToggleButton pauseToggle;
+    private JButton play;
     private JButton reset;
 
 
@@ -18,10 +18,12 @@ public class GameOfLife extends JFrame {
         universe = new Universe(universeSize);
         setTitle("Game of Life");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 500);
+        setSize(600, 600);
         setLocationRelativeTo(null);
         setVisible(true);
         start();
+
+        evolution();
     }
 
 
@@ -37,18 +39,8 @@ public class GameOfLife extends JFrame {
         updateLabels();
 
         //Buttons
-        pauseToggle = new JToggleButton("Pause");
-        pauseToggle.setName("pauseResume");
-        //adding changeListener to pauseToggle
-        //TODO: implement pause functionality utilizing Threads
-        pauseToggle.addChangeListener(e -> {
-            if (pauseToggle.isSelected()) {
-                pauseToggle.setText("Play");
-            }
-            else {
-                pauseToggle.setText("Pause");
-            }
-        });
+        //TODO: add functionality to play and pause game
+        play = new JButton("Play");
 
         //TODO: add functionality to reset the entire game on button press
         reset = new JButton("Reset");
@@ -56,14 +48,13 @@ public class GameOfLife extends JFrame {
         //add labels to top panel
         topPanel.add(generationLabel);
         topPanel.add(cellsAliveLabel);
-        topPanel.add(pauseToggle);
+        topPanel.add(play);
         topPanel.add(reset);
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS)); //stacking labels vertically
 
         getContentPane().add(BorderLayout.WEST, topPanel); // adding topPanel to top of frame
         setVisible(true);
 
-        evolution();
     }
 
     public void displayCurrentUniverse() {
@@ -109,10 +100,11 @@ public class GameOfLife extends JFrame {
 
     public void slowDisplay() {
         try {
-            Thread.sleep(500);
+            Thread.sleep(600);
         }
         catch (InterruptedException ignored) {
 
         }
     }
+
 }
