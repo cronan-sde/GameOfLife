@@ -12,19 +12,17 @@ public class Universe {
 
     // fields
     private char[][] currentUniverse;
-    private char[][] futureUniverse;
     private List<Cell> cells;
     private Random rand;
 
     //ctor
     public Universe(int dimensions) {
-        setCurrentUniverse(new char[dimensions][dimensions]);
-        setCells(dimensions);
-        setGeneration(1);
+        setCurrentUniverse(new char[dimensions][dimensions]); //sets new empty universe
+        setCells(dimensions); //sets cells to have all cells in universe
+        setGeneration(1); //sets generation to 1
     }
 
     //business methods
-
     /**
      * Initializes the {@code Universe} utilizing {@see cells}
      */
@@ -42,13 +40,24 @@ public class Universe {
         displayCurrentUniverse();
     }
 
-    public void currentUniverse() {
+    /**
+     * Method sets the {@see currentUniverse} to hold the next generation of
+     * {@code Cell} using the {@see cells} list
+     */
+    public void nextGenerationUniverse() {
         //use cells list to set cell positions in currentUniverse
+        generation++;
+        for (Cell cell : cells) {
+            int x = cell.getLocation().x;
+            int y = cell.getLocation().y;
+            currentUniverse[x][y] = cell.getAliveOrDeadSym();
+        }
+        displayCurrentUniverse();
     }
 
     //TODO: display currentUniverse, delay, then display the new Universe
     public void displayCurrentUniverse() {
-        System.out.println(getGeneration() + " " + cellsAlive);
+        System.out.println("Generation: " + getGeneration() + ", Alive: " + cellsAlive);
         for (int i = 0; i < currentUniverse.length; i++) {
             for (int j = 0; j < currentUniverse[i].length; j++) {
                 System.out.print(currentUniverse[i][j]);
@@ -57,9 +66,13 @@ public class Universe {
         }
     }
 
-    public void futureUniverse() {
-        //Initialize futureUniverse
-        futureUniverse = new char[currentUniverse.length][currentUniverse.length];
+    /**
+     * Method checks each {@code Cell} and determines weather it will be alive or
+     * dead in the next generation of the {@code Universe}, utilizes
+     * {@see aliveNeighborsCount} to determine fate of the {@code Cell}
+     */
+    public void nextGeneration() {
+        //determine which cells are alive or dead for next generation
         //Go through cells and check how many of each cells neighbors are alive
         for (Cell cell : cells) {
             int aliveNeighbors = aliveNeighborsCount(cell);
@@ -77,7 +90,7 @@ public class Universe {
                 }
             }
         }
-        //set currentUniverse to be equal to the future universe
+        nextGenerationUniverse();
     }
 
     //getters and setters
@@ -170,8 +183,7 @@ public class Universe {
 
     /**
      * Method helps determine how many neighboring {@code Cell} of a specified {@code Cell} are alive
-     * @param row - represents the row coordinate value of the cell whose neighboring cells are to be checked
-     * @param col - represents the column coordinate value of cell whose neighboring cells are to be checked
+     * @param cell - {@code Cell} representing the cell whose neighbors are to be checked for life
      * @return int - representing the total number of neighboring cells that are alive
      */
     public int aliveNeighborsCount(Cell cell) {

@@ -21,6 +21,8 @@ public class UniverseTest {
 
     @Test
     public void testAliveNeighborsCount_shouldReturn8_whenAllNeighborsAreAlive() {
+        Cell testCell = new Cell(true);
+        testCell.setLocation(new Universe.Direction(0,0));
         universe.getCurrentUniverse()[4][0] = 'O'; // North neighbor of 0,0
         universe.getCurrentUniverse()[1][0] = 'O'; // South neighbor of 0,0
         universe.getCurrentUniverse()[0][1] = 'O'; // East neighbor of 0,0
@@ -30,11 +32,13 @@ public class UniverseTest {
         universe.getCurrentUniverse()[4][1] = 'O'; // NE neighbor of 0,0
         universe.getCurrentUniverse()[4][4] = 'O'; // NW neighbor of 0,0
 
-        assertEquals(8, universe.aliveNeighborsCount(0,0));
+        assertEquals(8, universe.aliveNeighborsCount(testCell));
     }
 
     @Test
     public void testAliveNeighborsCount_shouldReturnZero_whenNoNeighborsAreAlive() {
+        Cell testCell = new Cell(true);
+        testCell.setLocation(new Universe.Direction(0,0));
         universe.getCurrentUniverse()[4][0] = Character.MIN_VALUE; // North neighbor of 0,0
         universe.getCurrentUniverse()[1][0] = Character.MIN_VALUE; // South neighbor of 0,0
         universe.getCurrentUniverse()[0][1] = Character.MIN_VALUE; // East neighbor of 0,0
@@ -44,6 +48,6 @@ public class UniverseTest {
         universe.getCurrentUniverse()[4][1] = Character.MIN_VALUE; // NE neighbor of 0,0
         universe.getCurrentUniverse()[4][4] = Character.MIN_VALUE; // NW neighbor of 0,0
 
-        assertEquals(0, universe.aliveNeighborsCount(0,0));
+        assertEquals(0, universe.aliveNeighborsCount(testCell));
     }
 }

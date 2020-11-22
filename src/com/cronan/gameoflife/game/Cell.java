@@ -22,9 +22,6 @@ class Cell {
         return aliveOrDeadSym;
     }
 
-    public void setAliveOrDeadSym(char aliveOrDeadSym) {
-        this.aliveOrDeadSym = aliveOrDeadSym;
-    }
 
     public Universe.Direction getLocation() {
         return location;
