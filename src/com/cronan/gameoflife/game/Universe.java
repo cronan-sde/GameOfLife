@@ -5,6 +5,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * @author Cody Cronberger
+ * @version 1.0
+ *
+ * {@code Universe} represents a world that has {@code Cell} that are either alive or dead
+ * There are generations of {@code Cell} and they live and die based on 4 rules, a count is kept of
+ * how many {@code Cell} are alive. {@see life} which creates an initial {@see currentUniverse} and then
+ * continues evolving and getting the next generations of {@code Cell} and updating the {@see currentUniverse}
+ */
 public class Universe {
     //class level fields
     private static int generation;
