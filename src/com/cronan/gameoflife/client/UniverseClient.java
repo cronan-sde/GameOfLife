@@ -1,11 +1,10 @@
 package com.cronan.gameoflife.client;
 
-import com.cronan.gameoflife.game.Universe;
+import com.cronan.gameoflife.game.GameOfLife;
 
 public class UniverseClient {
 
     public static void main(String[] args) {
-        Universe universe = new Universe(10);
-        universe.life();
+        GameOfLife life = new GameOfLife(10);
     }
 }

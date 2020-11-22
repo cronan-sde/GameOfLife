@@ -118,6 +118,10 @@ public class Universe {
         Universe.generation = generation;
     }
 
+    public static int getCellsAlive() {
+        return cellsAlive;
+    }
+
     public char[][] getCurrentUniverse() {
         return currentUniverse;
     }
