@@ -123,18 +123,18 @@ public class Universe {
 
     /**
      * Method helps determine how many neighboring {@code Cell} of a specified {@code Cell} are alive
-     * @param r - represents the row coordinate value of the cell whose neighboring cells are to be checked
-     * @param c - represents the column coordinate value of cell whose neighboring cells are to be checked
+     * @param row - represents the row coordinate value of the cell whose neighboring cells are to be checked
+     * @param col - represents the column coordinate value of cell whose neighboring cells are to be checked
      * @return int - representing the total number of neighboring cells that are alive
      */
-    public int aliveNeighborsCount(int r, int c) {
+    public int aliveNeighborsCount(int row, int col) {
         int alive = 0;
 
         for (Direction direction : directions) {
-            int row = (direction.x + r + currentUniverse.length) % currentUniverse.length;
-            int col = (direction.y + c + currentUniverse.length) % currentUniverse.length;
+            int r = (direction.x + row + currentUniverse.length) % currentUniverse.length; //formula to wrap around the grid
+            int c = (direction.y + col + currentUniverse.length) % currentUniverse.length; //formula to wrap around the grid
 
-            if (currentUniverse[row][col] == 'O') {
+            if (currentUniverse[r][c] == 'O') {
                 alive++;
             }
         }
