@@ -46,12 +46,9 @@ public class Universe {
         }
     }
 
-    //TODO: set futureUniverse by checking cells and neigboring cells
     public void futureUniverse() {
-
+        
     }
-
-    //TODO: find a way to check all neighbors and weather they are alive or dead
 
     //getters and setters
     public static int getGeneration() {
@@ -74,6 +71,11 @@ public class Universe {
         return cells;
     }
 
+    /**
+     * Method uses {@see generateCell} to create a list of {@code Cell} that
+     * will be used to populate the {@code Universe}
+     * @param dimensions - represents the length of the universe
+     */
     private void setCells(int dimensions) {
         int size = dimensions * dimensions;
         this.cells = new ArrayList<>(size);
@@ -83,6 +85,13 @@ public class Universe {
         }
     }
 
+    /**
+     * Method used to help set the initial cells in the {@code Universe}
+     * used by {@see setCells}, uses {@see Random} to get a random boolean
+     * then creates a new {@code Cell} based on that boolean, each time an
+     * alive {@code Cell} is created {@see cellsAlive} is incremented
+     * @return {@code Cell} - that is either alive or dead
+     */
     private Cell generateCell() {
         rand = new Random();
         Cell cell;
@@ -97,8 +106,10 @@ public class Universe {
         return cell;
     }
 
-    //TODO: find all neighbors and check weather alive or dead
-    //Static inner class Direction to access all neighboring cells
+    /**
+     * Static nested class {@code Direction} used by {@code Universe} to help
+     * find all neighbors of a {@code Cell}
+     */
     static class Direction {
         int x;
         int y;
@@ -109,7 +120,10 @@ public class Universe {
         }
     }
 
-    //Creating all directions for neighboring cells N, S, E, W, SE, SW, NE, NW
+    /*
+     * Creating all directions for neighboring cells N, S, E, W, SE, SW, NE, NW
+     * Each cell has 8 neighboring cells
+     */
     Direction north = new Direction(-1, 0);
     Direction south = new Direction(1, 0);
     Direction east = new Direction(0, 1);
@@ -119,6 +133,9 @@ public class Universe {
     Direction northEast = new Direction(-1, 1);
     Direction northWest = new Direction(-1, -1);
 
+    /*
+     * hold each direction in a list for quick access to find alive neighbors
+     */
     List<Direction> directions = Arrays.asList(north, south, east, west, southEast, southWest, northEast, northWest);
 
     /**
