@@ -62,11 +62,11 @@ public class Universe {
             int y = cell.getLocation().y;
             currentUniverse[x][y] = cell.getAliveOrDeadSym();
         }
-        displayCurrentUniverse();
+        displayCurrentUniverse(); // testing purposes only
     }
 
 
-    //TODO: display currentUniverse, delay, then display the new Universe
+    //TODO: Remove once everything works, for testing purposes only
     public void displayCurrentUniverse() {
         System.out.println("Generation: " + getGeneration() + ", Alive: " + cellsAlive);
         for (int i = 0; i < currentUniverse.length; i++) {

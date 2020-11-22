@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 
-public class GameOfLife extends JFrame implements Runnable {
+public class GameOfLife extends JFrame  {
     //Universe
     private Universe universe;
     //Universe Size
@@ -17,7 +17,7 @@ public class GameOfLife extends JFrame implements Runnable {
     private JToggleButton playToggle;
     private JButton reset;
 
-    //button Icons
+    //button Icons - TODO: add icons later
 //    ImageIcon pauseIcon = new ImageIcon();
 //    ImageIcon playIcon = new ImageIcon();
 //    ImageIcon reloadIcon = new ImageIcon();
@@ -35,9 +35,6 @@ public class GameOfLife extends JFrame implements Runnable {
         setSize(600, 600);
         setLocationRelativeTo(null);
         setVisible(true);
-        start();
-
-        evolution();
     }
 
 
@@ -91,6 +88,8 @@ public class GameOfLife extends JFrame implements Runnable {
 
         getContentPane().add(BorderLayout.WEST, mainPan); //adding main panel to the left side of frame
         setVisible(true); //setting frame to be visible
+
+        evolution();
     }
 
     public void displayCurrentUniverse() {
@@ -123,19 +122,14 @@ public class GameOfLife extends JFrame implements Runnable {
         cellsAliveLabel.setText("Alive: " + Universe.getCellsAlive());
     }
 
-//    public void evolution() {
-//        displayCurrentUniverse();
-//        while (true) {
-//            universe.nextGeneration();
-//            slowDisplay();
-//            displayCurrentUniverse();
-//        }
-//    }
-
     public void evolution() {
-        allowPause();
-        slowDisplay();
-        universe.nextGeneration();
+        displayCurrentUniverse();
+        while (true) {
+            allowPause();
+            universe.nextGeneration();
+            slowDisplay();
+            displayCurrentUniverse();
+        }
     }
 
     //allow thread to be paused using lock object
@@ -181,14 +175,6 @@ public class GameOfLife extends JFrame implements Runnable {
         playToggle.setSelected(false);
         synchronized (lock) {
             lock.notify();
-        }
-    }
-
-    @Override
-    public void run() {
-        while (true) {
-            displayCurrentUniverse();
-            evolution();
         }
     }
 }

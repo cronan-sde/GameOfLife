@@ -6,7 +6,6 @@ public class UniverseClient {
 
     public static void main(String[] args) {
         GameOfLife life = new GameOfLife();
-        Thread game = new Thread(life);
-        game.start();
+        life.start();
     }
 }
