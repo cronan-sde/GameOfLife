@@ -24,18 +24,29 @@ public class Universe {
     }
 
     //business methods
-    public void initializeCurrentUniverse() {
+
+    /**
+     * Initializes the {@code Universe} utilizing {@see cells}
+     */
+    public void initializeUniverse() {
         //place cells into the current universe
         int cellIndx = 0;
         for (int i = 0; i < currentUniverse.length; i++) {
             for (int j = 0; j < currentUniverse[i].length; j++) {
-                currentUniverse[i][j] = cells.get(cellIndx).getAliveOrDeadSym();
+                Cell cell = cells.get(cellIndx);
+                currentUniverse[i][j] = cell.getAliveOrDeadSym();
+                cell.setLocation(new Direction(i, j)); //set x,y in cell to location in universe
                 cellIndx++;
             }
         }
         displayCurrentUniverse();
     }
 
+    public void currentUniverse() {
+        //use cells list to set cell positions in currentUniverse
+    }
+
+    //TODO: display currentUniverse, delay, then display the new Universe
     public void displayCurrentUniverse() {
         System.out.println(getGeneration() + " " + cellsAlive);
         for (int i = 0; i < currentUniverse.length; i++) {
@@ -47,7 +58,26 @@ public class Universe {
     }
 
     public void futureUniverse() {
-        
+        //Initialize futureUniverse
+        futureUniverse = new char[currentUniverse.length][currentUniverse.length];
+        //Go through cells and check how many of each cells neighbors are alive
+        for (Cell cell : cells) {
+            int aliveNeighbors = aliveNeighborsCount(cell);
+            //set cells to alive or dead based on neighbor alive count
+            if (cell.isAlive()) {
+                if (aliveNeighbors < 2 || aliveNeighbors > 3) {
+                    cell.setAlive(false);
+                    cellsAlive--;
+                }
+            }
+            else {
+                if (aliveNeighbors == 3) {
+                    cell.setAlive(true);
+                    cellsAlive++;
+                }
+            }
+        }
+        //set currentUniverse to be equal to the future universe
     }
 
     //getters and setters
@@ -144,8 +174,10 @@ public class Universe {
      * @param col - represents the column coordinate value of cell whose neighboring cells are to be checked
      * @return int - representing the total number of neighboring cells that are alive
      */
-    public int aliveNeighborsCount(int row, int col) {
+    public int aliveNeighborsCount(Cell cell) {
         int alive = 0;
+        int row = cell.getLocation().x; //getting cells x,y location in universe
+        int col = cell.getLocation().y;
 
         for (Direction direction : directions) {
             int r = (direction.x + row + currentUniverse.length) % currentUniverse.length; //formula to wrap around the grid

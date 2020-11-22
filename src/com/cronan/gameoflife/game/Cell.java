@@ -3,6 +3,7 @@ package com.cronan.gameoflife.game;
 class Cell {
     private boolean isAlive; //tells weather a cell is alive or dead
     private char aliveOrDeadSym;
+    private Universe.Direction location; //test
 
     public Cell(boolean isAlive) {
         setAlive(isAlive);
@@ -23,5 +24,13 @@ class Cell {
 
     public void setAliveOrDeadSym(char aliveOrDeadSym) {
         this.aliveOrDeadSym = aliveOrDeadSym;
+    }
+
+    public Universe.Direction getLocation() {
+        return location;
+    }
+
+    public void setLocation(Universe.Direction location) {
+        this.location = location;
     }
 }
