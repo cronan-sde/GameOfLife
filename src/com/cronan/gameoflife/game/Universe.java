@@ -29,6 +29,7 @@ public class Universe {
         setCurrentUniverse(new char[dimensions][dimensions]); //sets new empty universe
         setCells(dimensions); //sets cells to have all cells in universe
         setGeneration(1); //sets generation to 1
+        initializeUniverse();
     }
 
     //business methods
@@ -64,12 +65,6 @@ public class Universe {
         displayCurrentUniverse();
     }
 
-    public void life() {
-        initializeUniverse();
-        while (generation < 20) {
-            nextGeneration();
-        }
-    }
 
     //TODO: display currentUniverse, delay, then display the new Universe
     public void displayCurrentUniverse() {

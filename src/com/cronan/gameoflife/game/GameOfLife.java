@@ -30,10 +30,9 @@ public class GameOfLife extends JFrame {
         //JLabels
         generationLabel = new JLabel();
         generationLabel.setName("genLabel");
-        generationLabel.setText("Generation #:" + Universe.getGeneration());
         cellsAliveLabel = new JLabel();
         cellsAliveLabel.setName("cellsAlive");
-        cellsAliveLabel.setText("Alive:" + Universe.getCellsAlive());
+        updateLabels();
 
         //add labels to top panel
         topPanel.add(generationLabel);
@@ -42,5 +41,47 @@ public class GameOfLife extends JFrame {
 
         getContentPane().add(BorderLayout.NORTH, topPanel); // adding topPanel to top of frame
         setVisible(true);
+
+        evolution();
+    }
+
+    public void displayCurrentUniverse() {
+        int universeLength = universe.getCurrentUniverse().length;
+        char[][] universeGrid = universe.getCurrentUniverse();
+        System.out.println(universeLength);
+        JPanel cellPanel = new JPanel();
+        cellPanel.setLayout(new GridLayout(universeLength, universeLength));
+
+        for (char[] cell : universeGrid) {
+            for (int j = 0; j < universeLength; j++) {
+                JButton cellBtn = new JButton();
+                cellBtn.setSize(1,1);
+                cellBtn.setEnabled(false);
+                if (cell[j] == 'O') {
+                    cellBtn.setBackground(Color.WHITE);
+                }
+                else {
+                    cellBtn.setBackground(Color.BLACK);
+                    cellBtn.setBorder(BorderFactory.createEmptyBorder());
+                }
+                cellPanel.add(cellBtn);
+            }
+        }
+        updateLabels();
+        getContentPane().add(BorderLayout.CENTER, cellPanel); //putting grid in center of pane
+        setVisible(true);
+    }
+
+    public void updateLabels() {
+        generationLabel.setText("Generation # " + Universe.getGeneration());
+        cellsAliveLabel.setText("Alive: " + Universe.getCellsAlive());
+    }
+
+    public void evolution() {
+        displayCurrentUniverse();
+        while (Universe.getGeneration() < 20) {
+            universe.nextGeneration();
+            displayCurrentUniverse();
+        }
     }
 }
