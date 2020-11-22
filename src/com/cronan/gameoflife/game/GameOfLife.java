@@ -35,10 +35,22 @@ public class GameOfLife extends JFrame {
         updateLabels();
 
         //Buttons
+        pauseToggle = new JToggleButton("Pause");
+        pauseToggle.setName("pauseResume");
+        //adding changeListener to pauseToggle
+        pauseToggle.addChangeListener(e -> {
+            if (pauseToggle.isSelected()) {
+                pauseToggle.setText("Play");
+            }
+            else {
+                pauseToggle.setText("Pause");
+            }
+        });
 
         //add labels to top panel
         topPanel.add(generationLabel);
         topPanel.add(cellsAliveLabel);
+        topPanel.add(pauseToggle);
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS)); //stacking labels vertically
 
         getContentPane().add(BorderLayout.WEST, topPanel); // adding topPanel to top of frame
@@ -96,4 +108,5 @@ public class GameOfLife extends JFrame {
 
         }
     }
+
 }
