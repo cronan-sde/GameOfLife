@@ -5,13 +5,14 @@ import java.awt.*;
 
 public class GameOfLife extends JFrame {
     //Universe
-    private Universe universe;
+    private final Universe universe;
     //Labels
     private JLabel generationLabel;
     private JLabel cellsAliveLabel;
     //Buttons
     private JToggleButton pauseToggle;
     private JButton reset;
+
 
     public GameOfLife(int universeSize) {
         universe = new Universe(universeSize);
@@ -22,6 +23,7 @@ public class GameOfLife extends JFrame {
         setVisible(true);
         start();
     }
+
 
     public void start() {
         //panel for generationLabel and cellsAliveLabel
@@ -35,10 +37,27 @@ public class GameOfLife extends JFrame {
         updateLabels();
 
         //Buttons
+        pauseToggle = new JToggleButton("Pause");
+        pauseToggle.setName("pauseResume");
+        //adding changeListener to pauseToggle
+        //TODO: implement pause functionality utilizing Threads
+        pauseToggle.addChangeListener(e -> {
+            if (pauseToggle.isSelected()) {
+                pauseToggle.setText("Play");
+            }
+            else {
+                pauseToggle.setText("Pause");
+            }
+        });
+
+        //TODO: add functionality to reset the entire game on button press
+        reset = new JButton("Reset");
 
         //add labels to top panel
         topPanel.add(generationLabel);
         topPanel.add(cellsAliveLabel);
+        topPanel.add(pauseToggle);
+        topPanel.add(reset);
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS)); //stacking labels vertically
 
         getContentPane().add(BorderLayout.WEST, topPanel); // adding topPanel to top of frame
