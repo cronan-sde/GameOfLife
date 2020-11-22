@@ -104,6 +104,7 @@ public class Universe {
         nextGenerationUniverse();
     }
 
+
     //getters and setters
     public static int getGeneration() {
         return generation;
