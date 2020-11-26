@@ -89,48 +89,50 @@ public class GameOfLife extends JFrame  {
         getContentPane().add(BorderLayout.WEST, mainPan); //adding main panel to the left side of frame
         setVisible(true); //setting frame to be visible
 
-        evolution();
+//        evolution();
     }
 
-    public void displayCurrentUniverse() {
-        char[][] universeGrid = universe.getCurrentUniverse();
-        JPanel cellPanel = new JPanel();
-        cellPanel.setLayout(new GridLayout(UNIVERSE_SIZE, UNIVERSE_SIZE));
+//    public void displayCurrentUniverse() {
+//        char[][] universeGrid = universe.getCurrentUniverse();
+//        JPanel cellPanel = new JPanel();
+//        cellPanel.setLayout(new GridLayout(UNIVERSE_SIZE, UNIVERSE_SIZE));
+//
+//        for (char[] cell : universeGrid) {
+//            for (int j = 0; j < UNIVERSE_SIZE; j++) {
+//                JButton cellBtn = new JButton();
+//                cellBtn.setSize(1,1);
+//                cellBtn.setEnabled(false);
+//                if (cell[j] == 'O') {
+//                    cellBtn.setBackground(Color.WHITE);
+//                }
+//                else {
+//                    cellBtn.setBackground(Color.BLACK);
+//                    cellBtn.setBorder(BorderFactory.createEmptyBorder());
+//                }
+//                cellPanel.add(cellBtn);
+//            }
+//        }
+//        updateLabels();
+//        getContentPane().add(BorderLayout.CENTER, cellPanel); //putting grid in center of pane
+//        setVisible(true);
+//    }
 
-        for (char[] cell : universeGrid) {
-            for (int j = 0; j < UNIVERSE_SIZE; j++) {
-                JButton cellBtn = new JButton();
-                cellBtn.setSize(1,1);
-                cellBtn.setEnabled(false);
-                if (cell[j] == 'O') {
-                    cellBtn.setBackground(Color.WHITE);
-                }
-                else {
-                    cellBtn.setBackground(Color.BLACK);
-                    cellBtn.setBorder(BorderFactory.createEmptyBorder());
-                }
-                cellPanel.add(cellBtn);
-            }
-        }
-        updateLabels();
-        getContentPane().add(BorderLayout.CENTER, cellPanel); //putting grid in center of pane
-        setVisible(true);
-    }
+
 
     public void updateLabels() {
         generationLabel.setText("Generation # " + Universe.getGeneration());
         cellsAliveLabel.setText("Alive: " + Universe.getCellsAlive());
     }
-
-    public void evolution() {
-        displayCurrentUniverse();
-        while (true) {
-            allowPause();
-            universe.nextGeneration();
-            slowDisplay();
-            displayCurrentUniverse();
-        }
-    }
+//
+//    public void evolution() {
+//        displayCurrentUniverse();
+//        while (true) {
+//            allowPause();
+//            universe.nextGeneration();
+//            slowDisplay();
+//            displayCurrentUniverse();
+//        }
+//    }
 
     //allow thread to be paused using lock object
     public void allowPause() {
