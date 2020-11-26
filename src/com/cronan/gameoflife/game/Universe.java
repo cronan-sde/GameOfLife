@@ -25,9 +25,9 @@ public class Universe {
     private Random rand;
 
     //ctor
-    public Universe(int dimensions) {
-        setCurrentUniverse(new char[dimensions][dimensions]); //sets new empty universe
-        setCells(dimensions); //sets cells to have all cells in universe
+    public Universe(int size) {
+        setCurrentUniverse(new char[size][size]); //sets new empty universe
+        setCells(size); //sets cells to have all cells in universe
         setGeneration(1); //sets generation to 1
         initializeUniverse();
     }
