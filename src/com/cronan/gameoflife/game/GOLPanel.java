@@ -21,7 +21,7 @@ public class GOLPanel extends JPanel implements ActionListener {
         setBackground(Color.BLACK);
         setFocusable(true);
 
-//        new Timer(80, this).start();
+        new Timer(80, this).start();
     }
 
     public void paintComponent(Graphics g) {
@@ -40,6 +40,7 @@ public class GOLPanel extends JPanel implements ActionListener {
 
     private void displayCells(Graphics g) {
         g.setColor(Color.CYAN);
+
 
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
