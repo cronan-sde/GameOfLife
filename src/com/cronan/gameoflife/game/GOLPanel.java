@@ -4,13 +4,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class GOLPanel extends JPanel implements ActionListener {
 
     private static final int SCREEN_HEIGHT = 600;
     private static final int SCREEN_WIDTH = 600;
-    private static final int CELL_SIZE = 10;
+    private static final int CELL_SIZE = 8;
+    private static final int DELAY = 100;
     private boolean running = true;
+    private Timer timer;
 
     private Universe universe = new Universe(SCREEN_HEIGHT/CELL_SIZE);
     private char[][] grid = universe.getCurrentUniverse();
@@ -20,8 +24,10 @@ public class GOLPanel extends JPanel implements ActionListener {
         setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         setBackground(Color.BLACK);
         setFocusable(true);
+        addKeyListener(new LifekeyAdapter());
 
-        new Timer(80, this).start();
+        timer = new Timer(DELAY, this);
+        timer.start();
     }
 
     public void paintComponent(Graphics g) {
@@ -53,7 +59,43 @@ public class GOLPanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        universe.nextGeneration();
+        if (running) {
+            universe.nextGeneration();
+        }
         repaint();
+    }
+
+    public void pause() {
+        running = false;
+        timer.stop();
+    }
+
+    public void resume() {
+        running = true;
+        timer.start();
+    }
+
+    /**
+     * nested class to check for key press events
+     * Done: space = pause/unpause
+     * TODO: 'c' = pause/clear screen to draw
+     * TODO: 'r' = reset
+     * TODO: mouse click = toggle cells alive or dead while game running
+     */
+    class LifekeyAdapter extends KeyAdapter {
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            switch(e.getKeyCode()) {
+                case KeyEvent.VK_SPACE:
+                    if (running) {
+                        pause();
+                    }
+                    else {
+                        resume();
+                    }
+                break;
+            }
+        }
     }
 }
