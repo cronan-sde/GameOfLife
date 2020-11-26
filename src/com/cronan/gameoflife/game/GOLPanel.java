@@ -6,24 +6,29 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
-public class GOLPanel extends JPanel implements ActionListener {
+public class GOLPanel extends JPanel implements ActionListener, MouseListener, MouseMotionListener {
 
     private static final int SCREEN_HEIGHT = 600;
     private static final int SCREEN_WIDTH = 600;
-    private static final int CELL_SIZE = 8;
+    private static final int CELL_SIZE = 10;
     private static final int DELAY = 100;
     private boolean running = true;
-    private Timer timer;
+    private final Timer timer;
 
-    private Universe universe = new Universe(SCREEN_HEIGHT/CELL_SIZE);
-    private char[][] grid = universe.getCurrentUniverse();
+    private final Universe universe = new Universe(SCREEN_HEIGHT/CELL_SIZE);
+    private final char[][] grid = universe.getCurrentUniverse();
 
     public GOLPanel() {
 
         setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         setBackground(Color.BLACK);
         setFocusable(true);
+        addMouseListener(this);
+        addMouseMotionListener(this);
         addKeyListener(new LifekeyAdapter());
 
         timer = new Timer(DELAY, this);
@@ -57,14 +62,6 @@ public class GOLPanel extends JPanel implements ActionListener {
         }
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (running) {
-            universe.nextGeneration();
-        }
-        repaint();
-    }
-
     public void pause() {
         running = false;
         timer.stop();
@@ -73,6 +70,58 @@ public class GOLPanel extends JPanel implements ActionListener {
     public void resume() {
         running = true;
         timer.start();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (running) {
+            universe.nextGeneration();
+        }
+        repaint();
+    }
+
+    /**MouseListener methods**/
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        pause();
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        resume();
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
+    /**MouseMotionListener methods**/
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        int xCoord = e.getX() / CELL_SIZE;
+        int yCoord = e.getY() / CELL_SIZE;
+
+        if (grid[xCoord][yCoord] == Character.MIN_VALUE) {
+            grid[xCoord][yCoord] = 'O';
+        }
+
+        repaint();
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+
     }
 
     /**
