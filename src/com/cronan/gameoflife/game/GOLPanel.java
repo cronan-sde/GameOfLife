@@ -9,8 +9,10 @@ public class GOLPanel extends JPanel implements ActionListener {
 
     private static final int SCREEN_HEIGHT = 600;
     private static final int SCREEN_WIDTH = 600;
-    private static final int CELL_SIZE = 10;
+    private static final int CELL_SIZE = 8;
+    private static final int DELAY = 100;
     private boolean running = true;
+    private Timer timer;
 
     private Universe universe = new Universe(SCREEN_HEIGHT/CELL_SIZE);
     private char[][] grid = universe.getCurrentUniverse();
@@ -21,7 +23,8 @@ public class GOLPanel extends JPanel implements ActionListener {
         setBackground(Color.BLACK);
         setFocusable(true);
 
-        new Timer(80, this).start();
+        timer = new Timer(DELAY, this);
+        timer.start();
     }
 
     public void paintComponent(Graphics g) {
