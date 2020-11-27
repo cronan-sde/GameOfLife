@@ -13,7 +13,7 @@ import java.awt.event.MouseMotionListener;
 public class GOLPanel extends JPanel implements ActionListener, MouseListener, MouseMotionListener {
 
     private static final int SCREEN_SIZE = 600;
-    private static final int CELL_SIZE = 6;
+    private static final int CELL_SIZE = 10;
     private static final int DELAY = 200;
 
     private boolean isRunning = true;
@@ -39,7 +39,7 @@ public class GOLPanel extends JPanel implements ActionListener, MouseListener, M
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-//        drawGrid(g);
+        drawGrid(g);
         displayCells(g);
     }
 
@@ -141,9 +141,28 @@ public class GOLPanel extends JPanel implements ActionListener, MouseListener, M
 
         if (grid[xCoord][yCoord] == Character.MIN_VALUE) {
             grid[xCoord][yCoord] = 'O';
+            changeCell(xCoord,yCoord);
         }
 
         repaint();
+    }
+
+
+    //changes the cells to alive that the user draws themselves to ensure
+    //cells are updated with the changes to the UI
+    public void changeCell(int x, int y) {
+        universe.getCells().stream()
+                .filter(cell -> cell.getLocation().x == x && cell.getLocation().y == y)
+                .forEach(cell -> cell.setAlive(true));
+    }
+
+    //TODO: use this method to draw patterns and save the locations to a file.
+    //TODO: use the file with saved locations to fill Cells at those locations and recreate the patterns
+    private void getPatterns() {
+        System.out.println("Pattern: ");
+        universe.getCells().stream()
+                .filter(Cell::isAlive)
+                .forEach(cell -> System.out.println("X:" + cell.getLocation().x + ", Y:" + cell.getLocation().y));
     }
 
     @Override
