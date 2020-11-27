@@ -53,7 +53,6 @@ public class GOLPanel extends JPanel implements ActionListener, MouseListener, M
     private void displayCells(Graphics g) {
         g.setColor(Color.orange);
 
-
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
                 if (grid[i][j] == 'O') {
@@ -62,6 +61,7 @@ public class GOLPanel extends JPanel implements ActionListener, MouseListener, M
             }
         }
     }
+
 
     //pause game
     public void pause() {

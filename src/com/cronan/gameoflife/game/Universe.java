@@ -15,10 +15,6 @@ import java.util.Random;
  * continues evolving and getting the next generations of {@code Cell} and updating the {@see currentUniverse}
  */
 public class Universe {
-    //class level fields
-    private static int generation;
-    private static int cellsAlive = 0;
-
     // fields
     private char[][] currentUniverse;
     private List<Cell> cells;
@@ -28,7 +24,6 @@ public class Universe {
     public Universe(int size) {
         setCurrentUniverse(new char[size][size]); //sets new empty universe
         setCells(size); //sets cells to have all cells in universe
-        setGeneration(1); //sets generation to 1
         initializeUniverse();
     }
 
@@ -47,7 +42,7 @@ public class Universe {
                 cellIndx++;
             }
         }
-        displayCurrentUniverse();
+//        displayCurrentUniverse();
     }
 
     /**
@@ -56,19 +51,17 @@ public class Universe {
      */
     public void nextGenerationUniverse() {
         //use cells list to set cell positions in currentUniverse
-        generation++;
         for (Cell cell : cells) {
             int x = cell.getLocation().x;
             int y = cell.getLocation().y;
             currentUniverse[x][y] = cell.getAliveOrDeadSym();
         }
-        displayCurrentUniverse(); // testing purposes only
+//        displayCurrentUniverse(); // testing purposes only
     }
 
 
     //TODO: Remove once everything works, for testing purposes only
     public void displayCurrentUniverse() {
-        System.out.println("Generation: " + getGeneration() + ", Alive: " + cellsAlive);
         for (int i = 0; i < currentUniverse.length; i++) {
             for (int j = 0; j < currentUniverse[i].length; j++) {
                 System.out.print(currentUniverse[i][j]);
@@ -91,13 +84,11 @@ public class Universe {
             if (cell.isAlive()) {
                 if (aliveNeighbors < 2 || aliveNeighbors > 3) {
                     cell.setAlive(false);
-                    cellsAlive--;
                 }
             }
             else {
                 if (aliveNeighbors == 3) {
                     cell.setAlive(true);
-                    cellsAlive++;
                 }
             }
         }
@@ -106,18 +97,6 @@ public class Universe {
 
 
     //getters and setters
-    public static int getGeneration() {
-        return generation;
-    }
-
-    public static void setGeneration(int generation) {
-        Universe.generation = generation;
-    }
-
-    public static int getCellsAlive() {
-        return cellsAlive;
-    }
-
     public char[][] getCurrentUniverse() {
         return currentUniverse;
     }
@@ -157,7 +136,6 @@ public class Universe {
 
         if (rand.nextBoolean()) {
             cell = new Cell(true);
-            cellsAlive++;
         }
         else {
             cell = new Cell(false);

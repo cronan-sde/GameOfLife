@@ -1,6 +1,6 @@
 package com.cronan.gameoflife.game;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 public class GOLFrame extends JFrame {
 
