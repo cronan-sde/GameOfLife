@@ -15,7 +15,9 @@ public class GOLPanel extends JPanel implements ActionListener, MouseListener, M
     private static final int SCREEN_SIZE = 600;
     private static final int CELL_SIZE = 6;
     private static final int DELAY = 200;
-    private boolean running = true;
+
+    private boolean isRunning = true;
+    private boolean isUserDrawing = false;
     private final Timer timer;
 
     private final Universe universe = new Universe(SCREEN_SIZE/CELL_SIZE);
@@ -61,17 +63,25 @@ public class GOLPanel extends JPanel implements ActionListener, MouseListener, M
         }
     }
 
+    //pause game
     public void pause() {
-        running = false;
+        isRunning = false;
         timer.stop();
     }
 
+    //If the user is not drawing on emptyUniverse after pressing 'c' key
+    //set game to run, otherwise wait on user to inform game to start by
+    //pressing the 'R' key
     public void resume() {
-        running = true;
-        timer.start();
+        if (!isUserDrawing) {
+            isRunning = true;
+            timer.start();
+        }
     }
 
     private void emptyUniverse() {
+        isUserDrawing = true;
+
         universe.getCells().forEach(cell -> cell.setAlive(false));
         universe.getCells().forEach(cell -> {
             grid[cell.getLocation().x][cell.getLocation().y] = cell.getAliveOrDeadSym();
@@ -81,7 +91,7 @@ public class GOLPanel extends JPanel implements ActionListener, MouseListener, M
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (running) {
+        if (isRunning) {
             universe.nextGeneration();
         }
         repaint();
@@ -98,14 +108,18 @@ public class GOLPanel extends JPanel implements ActionListener, MouseListener, M
 
     }
 
+    //pause while user makes small changes to running program
     @Override
     public void mousePressed(MouseEvent e) {
         pause();
     }
 
+    //when user releases mouse and user not drawing on emptyUniverse, start running
     @Override
     public void mouseReleased(MouseEvent e) {
-        resume();
+        if (!isUserDrawing) {
+            resume();
+        }
     }
 
     @Override
@@ -119,6 +133,7 @@ public class GOLPanel extends JPanel implements ActionListener, MouseListener, M
     }
 
     //********MouseMotionListener methods**********//
+    //allow users to make cells alive that they click and drag over
     @Override
     public void mouseDragged(MouseEvent e) {
         int xCoord = e.getX() / CELL_SIZE;
@@ -140,7 +155,7 @@ public class GOLPanel extends JPanel implements ActionListener, MouseListener, M
      * nested class to check for key press events
      * Done: space = pause/unpause
      * Done: 'c' = pause/clear screen to allow user to start from blank slate
-     * TODO: 'r' = reset game
+     * Done: 'R' = resume program when user is done drawing after pressing 'C' key
      */
     class LifekeyAdapter extends KeyAdapter {
 
@@ -148,17 +163,21 @@ public class GOLPanel extends JPanel implements ActionListener, MouseListener, M
         public void keyPressed(KeyEvent e) {
             switch(e.getKeyCode()) {
                 case KeyEvent.VK_SPACE:
-                    if (running) {
+                    if (isRunning) {
                         pause();
                     }
                     else {
                         resume();
                     }
-                break;
+                    break;
                 case KeyEvent.VK_C:
                     emptyUniverse();
                     pause();
-                break;
+                    break;
+                case KeyEvent.VK_R:
+                    isUserDrawing = false;
+                    resume();
+                    break;
             }
         }
     }
