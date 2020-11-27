@@ -158,11 +158,14 @@ public class GOLPanel extends JPanel implements ActionListener, MouseListener, M
 
     //TODO: use this method to draw patterns and save the locations to a file.
     //TODO: use the file with saved locations to fill Cells at those locations and recreate the patterns
+    //TODO: create utility class to read/write to file
+    //TODO: send pattern information to that class to write
     private void getPatterns() {
-        System.out.println("Pattern: ");
-        universe.getCells().stream()
-                .filter(Cell::isAlive)
-                .forEach(cell -> System.out.println("X:" + cell.getLocation().x + ", Y:" + cell.getLocation().y));
+//        System.out.println("Pattern: ");
+//        universe.getCells().stream()
+//                .filter(Cell::isAlive)
+//                .forEach(cell -> System.out.println("X:" + cell.getLocation().x + ", Y:" + cell.getLocation().y));
+
     }
 
     @Override
