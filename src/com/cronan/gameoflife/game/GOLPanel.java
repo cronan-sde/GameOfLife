@@ -141,9 +141,18 @@ public class GOLPanel extends JPanel implements ActionListener, MouseListener, M
 
         if (grid[xCoord][yCoord] == Character.MIN_VALUE) {
             grid[xCoord][yCoord] = 'O';
+            changeCell(xCoord,yCoord);
         }
 
         repaint();
+    }
+
+    //changes the cells to alive that the user draws themselves to ensure
+    //cells are updated with the changes to the UI
+    public void changeCell(int x, int y) {
+        universe.getCells().stream()
+                .filter(cell -> cell.getLocation().x == x && cell.getLocation().y == y)
+                .forEach(cell -> cell.setAlive(true));
     }
 
     @Override
