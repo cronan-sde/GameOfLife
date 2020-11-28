@@ -15,7 +15,7 @@ import java.awt.event.MouseMotionListener;
 public class GOLPanel extends JPanel implements ActionListener, MouseListener, MouseMotionListener {
 
     private static final int SCREEN_SIZE = 600;
-    private static final int CELL_SIZE = 10;
+    private static final int CELL_SIZE = 6;
     private static final int DELAY = 200;
 
     private boolean isRunning = true;
