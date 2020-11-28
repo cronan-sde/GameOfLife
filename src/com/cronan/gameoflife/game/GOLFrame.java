@@ -2,6 +2,9 @@ package com.cronan.gameoflife.game;
 
 import javax.swing.*;
 
+/*
+ * window frame for the Game
+ */
 public class GOLFrame extends JFrame {
 
     public GOLFrame() {

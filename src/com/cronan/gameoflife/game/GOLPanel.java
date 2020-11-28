@@ -45,6 +45,9 @@ public class GOLPanel extends JPanel implements ActionListener, MouseListener, M
         displayCells(g);
     }
 
+    /*
+     * Used to draw grid lines, probably will be taken out in final version
+     */
     public void drawGrid(Graphics g) {
         for (int i = 0; i < grid.length; i++) {
             g.drawLine(i * CELL_SIZE, 0, i * CELL_SIZE, SCREEN_SIZE); //row
@@ -52,6 +55,11 @@ public class GOLPanel extends JPanel implements ActionListener, MouseListener, M
         }
     }
 
+    /*
+     * Displays the cells that are alive as orange and sets them to fill up
+     * the grid by utilizing the CELL_SIZE value. ensures cell takes up the entire space
+     * it is given
+     */
     private void displayCells(Graphics g) {
         g.setColor(Color.orange);
 
@@ -81,6 +89,10 @@ public class GOLPanel extends JPanel implements ActionListener, MouseListener, M
         }
     }
 
+    /*
+     * Used to create an emptyUniverse with all dead cells, used to allow user
+     * to draw their own patterns
+     */
     private void emptyUniverse() {
         isUserDrawing = true;
 
@@ -99,12 +111,22 @@ public class GOLPanel extends JPanel implements ActionListener, MouseListener, M
         repaint();
     }
 
+    /*
+     * helper method to change the value of the UI grid to reflect the state of the Cell in that
+     * location
+     */
     private void updateUniverse() {
         universe.getCells().forEach(cell -> {
             grid[cell.getLocation().x][cell.getLocation().y] = cell.getAliveOrDeadSym();
         });
     }
 
+    /*
+     * gathers data from pattern csv files of coordinate locations
+     * uses change cell to change the cell at those locations to be alive
+     * once all cells are updated the UI universe is updated to reflect the changes
+     * in cells
+     */
     private void displayPattern() {
         isUserDrawing = false;
         java.util.List<Universe.Direction> patternLocations = PatternCSVReadWrite.readPatterns();
@@ -115,7 +137,7 @@ public class GOLPanel extends JPanel implements ActionListener, MouseListener, M
 
     //changes the cells to alive that the user draws themselves to ensure
     //cells are updated with the changes to the UI
-    public void changeCell(int x, int y) {
+    private void changeCell(int x, int y) {
         universe.getCells().stream()
                 .filter(cell -> cell.getLocation().x == x && cell.getLocation().y == y)
                 .forEach(cell -> cell.setAlive(true));
@@ -123,10 +145,10 @@ public class GOLPanel extends JPanel implements ActionListener, MouseListener, M
 //        getPatterns(x, y);
     }
 
-    //TODO: use this method to draw patterns and save the locations to a file.
-    //TODO: use the file with saved locations to fill Cells at those locations and recreate the patterns
-    //TODO: create utility class to read/write to file
-    //TODO: send pattern information to that class to write
+    /*
+     * only to be used to add locations to pattern csv files,
+     * no need for use in game
+     */
     private void getPatterns(int x, int y) {
         StringBuilder sb = new StringBuilder();
         sb.append(x);
@@ -143,12 +165,12 @@ public class GOLPanel extends JPanel implements ActionListener, MouseListener, M
 
     }
 
-    /**
+    /*
      * nested class to check for key press events
      * Done: space = pause/unpause
      * Done: 'c' = pause/clear screen to allow user to start from blank slate
      * Done: 'R' = resume program when user is done drawing after pressing 'C' key
-     * TODO: 'P' = puts cool pattern on screen
+     * Done: 'P' = puts cool pattern on screen
      */
     class LifekeyAdapter extends KeyAdapter {
 

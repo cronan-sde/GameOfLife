@@ -10,10 +10,18 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * TODO: make multiple pattern files, with specific names.
+ *  Find a way to allow random access to reading the pattern files
+ *  so user gets random patterns everytime upon pressing P key
+ */
 public class PatternCSVReadWrite {
 
     private static String csvFile = "src/pattern.csv";
 
+    /*
+     * Only for me to use to input cool patterns for use by user
+     */
     public static void writePatters(String patternCoords) {
         try (PrintWriter write = new PrintWriter(new FileWriter(csvFile, true))) {
             write.println(patternCoords);
@@ -23,6 +31,10 @@ public class PatternCSVReadWrite {
         }
     }
 
+    /*
+     * read the csv file locations and add them to a list of directions to be updated
+     * in game
+     */
     public static List<Universe.Direction> readPatterns() {
         String line = "";
         String csvSplit = ",";
