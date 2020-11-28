@@ -147,13 +147,21 @@ public class Universe {
      * Static nested class {@code Direction} used by {@code Universe} to help
      * find all neighbors of a {@code Cell}
      */
-    static class Direction {
+    public static class Direction {
         int x;
         int y;
 
         public Direction(int x, int y) {
             this.x = x;
             this.y = y;
+        }
+
+        @Override
+        public String toString() {
+            return "Direction{" +
+                    "x=" + x +
+                    ", y=" + y +
+                    '}';
         }
     }
 
