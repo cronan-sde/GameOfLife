@@ -1,5 +1,7 @@
 package com.cronan.gameoflife.game;
 
+import com.cronan.gameoflife.util.PatternCSVReadWrite;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -83,11 +85,11 @@ public class GOLPanel extends JPanel implements ActionListener, MouseListener, M
         isUserDrawing = true;
 
         universe.getCells().forEach(cell -> cell.setAlive(false));
-        universe.getCells().forEach(cell -> {
-            grid[cell.getLocation().x][cell.getLocation().y] = cell.getAliveOrDeadSym();
-        });
+        updateUniverse();
+
         repaint();
     }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -97,6 +99,85 @@ public class GOLPanel extends JPanel implements ActionListener, MouseListener, M
         repaint();
     }
 
+    private void updateUniverse() {
+        universe.getCells().forEach(cell -> {
+            grid[cell.getLocation().x][cell.getLocation().y] = cell.getAliveOrDeadSym();
+        });
+    }
+
+    private void displayPattern() {
+        isUserDrawing = false;
+        java.util.List<Universe.Direction> patternLocations = PatternCSVReadWrite.readPatterns();
+        patternLocations.forEach(direction -> changeCell(direction.x, direction.y));
+        updateUniverse();
+        repaint();
+    }
+
+    //changes the cells to alive that the user draws themselves to ensure
+    //cells are updated with the changes to the UI
+    public void changeCell(int x, int y) {
+        universe.getCells().stream()
+                .filter(cell -> cell.getLocation().x == x && cell.getLocation().y == y)
+                .forEach(cell -> cell.setAlive(true));
+
+//        getPatterns(x, y);
+    }
+
+    //TODO: use this method to draw patterns and save the locations to a file.
+    //TODO: use the file with saved locations to fill Cells at those locations and recreate the patterns
+    //TODO: create utility class to read/write to file
+    //TODO: send pattern information to that class to write
+    private void getPatterns(int x, int y) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(x);
+        sb.append(",");
+        sb.append(y);
+
+
+        //send list of cells to CSVWriter
+        PatternCSVReadWrite.writePatters(sb.toString());
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+
+    }
+
+    /**
+     * nested class to check for key press events
+     * Done: space = pause/unpause
+     * Done: 'c' = pause/clear screen to allow user to start from blank slate
+     * Done: 'R' = resume program when user is done drawing after pressing 'C' key
+     * TODO: 'P' = puts cool pattern on screen
+     */
+    class LifekeyAdapter extends KeyAdapter {
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            switch(e.getKeyCode()) {
+                case KeyEvent.VK_SPACE:
+                    if (isRunning) {
+                        pause();
+                    }
+                    else {
+                        resume();
+                    }
+                    break;
+                case KeyEvent.VK_C:
+                    emptyUniverse();
+                    pause();
+                    break;
+                case KeyEvent.VK_R:
+                    isUserDrawing = false;
+                    resume();
+                    break;
+                case KeyEvent.VK_P:
+                    emptyUniverse();
+                    displayPattern();
+                    break;
+            }
+        }
+    }
     /*
      * Allow user to click and drag to make cells alive and draw across the screen
      * when clicked the game will pause while user draws, once mouse is released the generation
@@ -145,62 +226,5 @@ public class GOLPanel extends JPanel implements ActionListener, MouseListener, M
         }
 
         repaint();
-    }
-
-
-    //changes the cells to alive that the user draws themselves to ensure
-    //cells are updated with the changes to the UI
-    public void changeCell(int x, int y) {
-        universe.getCells().stream()
-                .filter(cell -> cell.getLocation().x == x && cell.getLocation().y == y)
-                .forEach(cell -> cell.setAlive(true));
-    }
-
-    //TODO: use this method to draw patterns and save the locations to a file.
-    //TODO: use the file with saved locations to fill Cells at those locations and recreate the patterns
-    //TODO: create utility class to read/write to file
-    //TODO: send pattern information to that class to write
-    private void getPatterns() {
-//        System.out.println("Pattern: ");
-//        universe.getCells().stream()
-//                .filter(Cell::isAlive)
-//                .forEach(cell -> System.out.println("X:" + cell.getLocation().x + ", Y:" + cell.getLocation().y));
-
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-
-    }
-
-    /**
-     * nested class to check for key press events
-     * Done: space = pause/unpause
-     * Done: 'c' = pause/clear screen to allow user to start from blank slate
-     * Done: 'R' = resume program when user is done drawing after pressing 'C' key
-     */
-    class LifekeyAdapter extends KeyAdapter {
-
-        @Override
-        public void keyPressed(KeyEvent e) {
-            switch(e.getKeyCode()) {
-                case KeyEvent.VK_SPACE:
-                    if (isRunning) {
-                        pause();
-                    }
-                    else {
-                        resume();
-                    }
-                    break;
-                case KeyEvent.VK_C:
-                    emptyUniverse();
-                    pause();
-                    break;
-                case KeyEvent.VK_R:
-                    isUserDrawing = false;
-                    resume();
-                    break;
-            }
-        }
     }
 }
