@@ -142,7 +142,7 @@ public class GOLPanel extends JPanel implements ActionListener, MouseListener, M
                 .filter(cell -> cell.getLocation().x == x && cell.getLocation().y == y)
                 .forEach(cell -> cell.setAlive(true));
 
-        getPatterns(x, y);
+//        getPatterns(x, y); //only uncomment to track new patterns to a file
     }
 
     /*
