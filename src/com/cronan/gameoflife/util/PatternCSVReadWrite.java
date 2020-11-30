@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /*
- * TODO: make multiple pattern files, with specific names.
+ * Done: make multiple pattern files, with specific names.
  *  Find a way to allow random access to reading the pattern files
  *  so user gets random patterns everytime upon pressing P key
  */
