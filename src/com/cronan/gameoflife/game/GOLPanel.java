@@ -15,7 +15,7 @@ import java.awt.event.MouseMotionListener;
 public class GOLPanel extends JPanel implements ActionListener, MouseListener, MouseMotionListener {
 
     private static final int SCREEN_SIZE = 600;
-    private static final int CELL_SIZE = 6;
+    private static final int CELL_SIZE = 10;
     private static final int DELAY = 200;
 
     private boolean isRunning = true;
@@ -142,7 +142,7 @@ public class GOLPanel extends JPanel implements ActionListener, MouseListener, M
                 .filter(cell -> cell.getLocation().x == x && cell.getLocation().y == y)
                 .forEach(cell -> cell.setAlive(true));
 
-//        getPatterns(x, y);
+        getPatterns(x, y);
     }
 
     /*

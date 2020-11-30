@@ -17,13 +17,14 @@ import java.util.List;
  */
 public class PatternCSVReadWrite {
 
-    private static String csvFile = "src/pattern.csv";
+    private static String sunCsvFile = "src/pattern.csv";
+    private static String shipCsvFile = "src/ship.csv";
 
     /*
      * Only for me to use to input cool patterns for use by user
      */
     public static void writePatters(String patternCoords) {
-        try (PrintWriter write = new PrintWriter(new FileWriter(csvFile, true))) {
+        try (PrintWriter write = new PrintWriter(new FileWriter(shipCsvFile, true))) {
             write.println(patternCoords);
         }
         catch (IOException e) {
@@ -41,7 +42,7 @@ public class PatternCSVReadWrite {
 
         List<Universe.Direction> patternDirections = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(shipCsvFile))) {
 
             while ((line = br.readLine()) != null) {
                 String[] coords = line.split(csvSplit);
