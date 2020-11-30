@@ -17,13 +17,16 @@ import java.util.List;
  */
 public class PatternCSVReadWrite {
 
-    private static String csvFile = "src/pattern.csv";
+    private static String sunCsvFile = "src/pattern.csv";
+    private static String shipCsvFile = "src/ship.csv";
+
+    private static String[] patternFiles = {sunCsvFile, shipCsvFile};
 
     /*
      * Only for me to use to input cool patterns for use by user
      */
     public static void writePatters(String patternCoords) {
-        try (PrintWriter write = new PrintWriter(new FileWriter(csvFile, true))) {
+        try (PrintWriter write = new PrintWriter(new FileWriter(shipCsvFile, true))) {
             write.println(patternCoords);
         }
         catch (IOException e) {
@@ -33,15 +36,17 @@ public class PatternCSVReadWrite {
 
     /*
      * read the csv file locations and add them to a list of directions to be updated
-     * in game
+     * in game, utilizes getRandomIdx to load random csv file to get random patterns on
+     * pressing P key
      */
     public static List<Universe.Direction> readPatterns() {
         String line = "";
         String csvSplit = ",";
+        int randIdx = getRandomIdx();
 
         List<Universe.Direction> patternDirections = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(patternFiles[randIdx]))) {
 
             while ((line = br.readLine()) != null) {
                 String[] coords = line.split(csvSplit);
@@ -54,5 +59,9 @@ public class PatternCSVReadWrite {
             e.printStackTrace();
         }
         return patternDirections;
+    }
+
+    private static int getRandomIdx() {
+        return (int)(Math.random() * patternFiles.length);
     }
 }
