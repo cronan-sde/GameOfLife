@@ -25,6 +25,7 @@ public class GOLPanel extends JPanel implements ActionListener, MouseListener, M
     private final Universe universe = new Universe(SCREEN_SIZE/CELL_SIZE);
     private final char[][] grid = universe.getCurrentUniverse();
 
+
     public GOLPanel() {
 
         setPreferredSize(new Dimension(SCREEN_SIZE, SCREEN_SIZE));
