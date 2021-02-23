@@ -13,3 +13,7 @@ Implementation of Conway's game of life
 * C key - creates a blank slate where users can draw their own initial patterns 
 * R key - If C key is used, R key needs to be pressed to resume game after user has drawn their own patterns
 * P key - generates random cool patterns for user to enjoy
+
+# How to run game
+* Download the GameOfLife.jar file from the current release
+* run java -jar "path to jar" in terminal to launch game
